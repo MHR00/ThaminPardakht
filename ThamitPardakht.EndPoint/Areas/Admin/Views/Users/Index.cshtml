@@ -1,0 +1,14 @@
+﻿@using ThamitPardakht.Services.Users.Queries.GetUsers
+@model ResultGetUserDto;
+
+
+<h3>This Admin Index Page</h3>
+
+@foreach (var item in Model.Users){
+    <div>
+          @item.FullName
+          <br>
+         @item.Email
+    </div>
+  
+}

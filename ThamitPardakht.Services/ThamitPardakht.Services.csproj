@@ -10,8 +10,4 @@
     <ProjectReference Include="..\ThamitPardakht.Data\ThamitPardakht.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Contacts\Queries\" />
-  </ItemGroup>
-
 </Project>

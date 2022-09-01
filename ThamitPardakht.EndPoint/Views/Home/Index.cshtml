@@ -3,6 +3,16 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-  
+    @if (User.Identity.IsAuthenticated)
+    {
+        <h1 class="display-4"> @User.Identity.Name  خوش آمدی</h1>
+        <ul>
+          
+                <li><a href="@Url.Action("AddContact" , "Contact")">Add Contact</a></li>
+          
+        </ul>
+
+    }
+
+
 </div>

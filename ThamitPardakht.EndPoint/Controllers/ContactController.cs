@@ -1,5 +1,7 @@
 ﻿
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using ThamitPardakht.Services.Contacts.Command.AddContact;
 
 namespace ThamitPardakht.EndPoint.Controllers
@@ -7,6 +9,7 @@ namespace ThamitPardakht.EndPoint.Controllers
     public class ContactController : Controller
     {
         private readonly IAddContactService _addContactService;
+        
 
         public ContactController(IAddContactService addContactService)
         {
@@ -17,9 +20,20 @@ namespace ThamitPardakht.EndPoint.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult AddContact(string FirstName , string LastName , string MobileNumber , long UserId) 
+        [HttpGet]
+        public IActionResult AddContact()
         {
+            
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddContact(string FirstName , string LastName , string MobileNumber) 
+        {
+
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            long UserId = (long)Convert.ToDouble(userId);
             var result = _addContactService.Execute(new RequestAddContactDto
             {
                 FirstName = FirstName ,

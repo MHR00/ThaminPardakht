@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ThamitPardakht.Data;
 using ThamitPardakht.Data.Interface;
 using ThamitPardakht.Services.Contacts.Command.AddContact;
+using ThamitPardakht.Services.Contacts.Queries.GetContact;
 using ThamitPardakht.Services.Users.Commands.EditUser;
 using ThamitPardakht.Services.Users.Commands.RegisterUser;
 using ThamitPardakht.Services.Users.Commands.RemoveUser;
@@ -41,6 +42,7 @@ builder.Services.AddScoped<IRemoveUserService, RemoveUserService>();
 builder.Services.AddScoped<IEditUserService, EditUserService>();
 builder.Services.AddScoped<IUserLoginService, UserLoginService>();
 builder.Services.AddScoped<IAddContactService, AddContactService>();
+builder.Services.AddScoped<IGetContactService, GetContactService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

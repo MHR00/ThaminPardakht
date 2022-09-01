@@ -9,8 +9,11 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="wwwroot\Custom Style\css\" />
-    <Folder Include="wwwroot\Custom Style\js\" />
+    <Folder Include="wwwroot\CustomStyle\Contact\css\" />
+    <Folder Include="wwwroot\CustomStyle\Contact\js\" />
+    <Folder Include="wwwroot\CustomStyle\LoginForm\css\" />
+    <Folder Include="wwwroot\CustomStyle\font\" />
+    <Folder Include="wwwroot\CustomStyle\UserTable\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,26 @@
+﻿@using ThamitPardakht.Services.Contacts.Queries.GetContact
+@model ResultGetContactDto;
+@{
+    ViewData["Title"] = "افزودن مخاطب جدید";
+    Layout = null;
+
+}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width , initial-scale=1.0" />
+        <title>افزودن مخاطب</title>
+        <!--main-style--------------------------------------->
+        <link rel="stylesheet" href="~/CustomStyle/Contactform/css/Style.css" />
+    </head>
+    <body>
+    @foreach(var item in Model.Contacts)
+    {
+        
+    }
+</body>
+    <script src="~/CustomStyle/Contactform/js/JavaScript.js"></script>
+</html>
+
+

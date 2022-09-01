@@ -2,36 +2,93 @@
 @model ResultGetUserDto;
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    Layout = null;
 }
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+   <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">>
 
-
-
-@foreach (var item in Model.Users){
-    <div>
-          @item.FullName
-          <br>
-         @item.Email
-    </div>
-    <div>
-         <button class="btn btn-danger" onclick="DeleteUser('@item.Id')">حذف</button>
-          <button class="btn btn-info" onclick="ShowModalEdituser('@item.Id' , '@item.FullName')">ویرایش</button>
-    </div>
+    <link rel="stylesheet" href="~/CustomStyle/UserTable/css/style.css" />
 
     
-}
+    <link rel="stylesheet" type="text/css" href="~/AdminTemplate/app-assets/css/app.css">
+    
+</head>
+<body>
 
+    <section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center mb-5">
+                <h2 class="heading-section">جدول کاربران</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-wrap">
+                    <table class="table table-responsive-xl">
+                        <thead>
+						    <tr>
+						    	<th>&nbsp;</th>
+						    	<th>ایمیل</th>
+						      <th>نام کاربری</th>
+						      <th>وضعیت</th>
+						      <th>&nbsp;</th>
+						    </tr>
+						  </thead>
+                        <tbody>
+                                @foreach(var item in Model.Users)
+                                {
+                                     <tr class="alert" role="alert">
+                                <td>
+                                    <label class="checkbox-wrap checkbox-primary">
+                                        <input type="button" onclick="ShowModalEdituser('@item.Id' , '@item.FullName')"><i class="fa fa-edit"></i>
+                                    </label>
+                                </td>
+                                <td class="d-flex align-items-center">
+                                    <div class="img" style="background-image: url(~/CustomStyle/UserTable/images/person_1.jpg);"></div>
+                                    <div class="pl-3 email">
+                                        <span>@item.Email</span>
+                                        <span>Added: 01/03/2020</span>
+                                    </div>
+                                </td>
+                                <td>@item.FullName</td>
+                                <td class="status"><span class="active">Active</span></td>
+                                <td>
+                                    <button type="button" class="close" onclick="DeleteUser('@item.Id')" aria-label="Close">
+                                        <span aria-hidden="true"><i class="fa fa-close"></i></span>
+                                    </button>
+                                </td>
+                            </tr>
+                                }
+                               
+                  
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
+</body>
 
-
-@section Scripts
-{
 
     <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
     <script src="~/Sweetalert2/sweetalert2.min.js"></script>
+    <script src="~/CustomStyle/UserTable/js/jquery.min.js"></script>
+    <script src="~/CustomStyle/UserTable/js/popper.js"></script>
+    <script src="~/CustomStyle/UserTable/js/bootstrap.min.js"></script>
+    <script src="~/CustomStyle/UserTable/js/main.js"></script>
 
     <script>
-        
+
 
         function DeleteUser(UserId) {
             swal.fire({
@@ -55,13 +112,13 @@
                         type: "POST",
                         url: "Delete",
                         data: postData,
-                        success: function (data) {
+                        success: function(data) {
                             if (data.isSuccess == true) {
                                 swal.fire(
                                     'موفق!',
                                     data.message,
                                     'success'
-                                ).then(function (isConfirm) {
+                                ).then(function(isConfirm) {
                                     location.reload();
                                 });
                             }
@@ -75,7 +132,7 @@
 
                             }
                         },
-                        error: function (request, status, error) {
+                        error: function(request, status, error) {
                             alert(request.responseText);
                         }
 
@@ -109,13 +166,13 @@
                         type: "POST",
                         url: "UserSatusChange",
                         data: postData,
-                        success: function (data) {
+                        success: function(data) {
                             if (data.isSuccess == true) {
                                 swal.fire(
                                     'موفق!',
                                     data.message,
                                     'success'
-                                ).then(function (isConfirm) {
+                                ).then(function(isConfirm) {
                                     location.reload();
                                 });
                             }
@@ -129,7 +186,7 @@
 
                             }
                         },
-                        error: function (request, status, error) {
+                        error: function(request, status, error) {
                             alert(request.responseText);
                         }
 
@@ -157,13 +214,13 @@
                 type: "POST",
                 url: "Edit",
                 data: postData,
-                success: function (data) {
+                success: function(data) {
                     if (data.isSuccess == true) {
                         swal.fire(
                             'موفق!',
                             data.message,
                             'success'
-                        ).then(function (isConfirm) {
+                        ).then(function(isConfirm) {
                             location.reload();
                         });
                     }
@@ -175,7 +232,7 @@
                         );
                     }
                 },
-                error: function (request, status, error) {
+                error: function(request, status, error) {
                     alert(request.responseText);
                 }
             });
@@ -194,9 +251,8 @@
         }
 
     </script>
-}
-@section Modals
-{
+
+ 
     <!-- Modal Edit User -->
     <div class="modal fade" id="EditUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -217,8 +273,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a  class="btn btn-secondary" data-dismiss="modal">بستن</a>
-                    <a  class="btn btn-primary" onclick="Edituser()">اعمال تغییرات</a>
+                    <a class="btn btn-secondary" data-dismiss="modal">بستن</a>
+                    <a class="btn btn-primary" onclick="Edituser()">اعمال تغییرات</a>
                 </div>
             </div>
         </div>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ThamitPardakht.Common.Dto;
 using ThamitPardakht.Common.Utilities;
@@ -19,15 +20,15 @@ namespace ThamitPardakht.Services.Users.Commands.RegisterUser
             _context = context;
         }
 
-        public ResultDto<ResultRgegisterUserDto> Execute(RequestRgegisterUserDto request)
+        public ResultDto<ResultRegisterUserDto> Execute(RequestRegisterUserDto request)
         {
             try
             {
                 if (string.IsNullOrWhiteSpace(request.Email))
                 {
-                    return new ResultDto<ResultRgegisterUserDto>()
+                    return new ResultDto<ResultRegisterUserDto>()
                     {
-                        Data = new ResultRgegisterUserDto()
+                        Data = new ResultRegisterUserDto()
                         {
                             UserId = 0,
                         },
@@ -38,9 +39,9 @@ namespace ThamitPardakht.Services.Users.Commands.RegisterUser
 
                 if (string.IsNullOrWhiteSpace(request.FullName))
                 {
-                    return new ResultDto<ResultRgegisterUserDto>()
+                    return new ResultDto<ResultRegisterUserDto>()
                     {
-                        Data = new ResultRgegisterUserDto()
+                        Data = new ResultRegisterUserDto()
                         {
                             UserId = 0,
                         },
@@ -50,9 +51,9 @@ namespace ThamitPardakht.Services.Users.Commands.RegisterUser
                 }
                 if (string.IsNullOrWhiteSpace(request.Password))
                 {
-                    return new ResultDto<ResultRgegisterUserDto>()
+                    return new ResultDto<ResultRegisterUserDto>()
                     {
-                        Data = new ResultRgegisterUserDto()
+                        Data = new ResultRegisterUserDto()
                         {
                             UserId = 0,
                         },
@@ -62,9 +63,9 @@ namespace ThamitPardakht.Services.Users.Commands.RegisterUser
                 }
                 if (request.Password != request.RePasword)
                 {
-                    return new ResultDto<ResultRgegisterUserDto>()
+                    return new ResultDto<ResultRegisterUserDto>()
                     {
-                        Data = new ResultRgegisterUserDto()
+                        Data = new ResultRegisterUserDto()
                         {
                             UserId = 0,
                         },
@@ -72,11 +73,30 @@ namespace ThamitPardakht.Services.Users.Commands.RegisterUser
                         Message = "رمز عبور و تکرار آن برابر نیست"
                     };
                 }
+                string emailRegex = @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Z0-9.-]+\.[A-Z]{2,}$";
+
+                var match = Regex.Match(request.Email, emailRegex, RegexOptions.IgnoreCase);
+                if (!match.Success)
+                {
+                    return new ResultDto<ResultRegisterUserDto>()
+                    {
+                        Data = new ResultRegisterUserDto()
+                        {
+                            UserId = 0,
+                        },
+                        IsSuccess = false,
+                        Message = "ایمیل خودرا به درستی وارد نمایید"
+                    };
+                }
+                var passwordHasher = new PasswordHasher();
+                var hashedPassword = passwordHasher.HashPassword(request.Password);
+
                 User user = new User()
                 {
                     Email = request.Email,
                     FullName = request.FullName,
-                    Password = HashPassword.GetSha256Hash(request.Password),
+                    Password = hashedPassword,
+                    IsActive = true,
                 };
                 List<UserInRole> userInRoles = new List<UserInRole>();
                 foreach (var item in request.roles)
@@ -90,13 +110,13 @@ namespace ThamitPardakht.Services.Users.Commands.RegisterUser
                         UserId = user.Id,
                     });
                 }
-                user.UserInRole = userInRoles;
+                user.UserInRoles = userInRoles;
 
                 _context.Users.Add(user);
                 _context.SaveChanges();
-                return new ResultDto<ResultRgegisterUserDto>()
+                return new ResultDto<ResultRegisterUserDto>()
                 {
-                    Data = new ResultRgegisterUserDto()
+                    Data = new ResultRegisterUserDto()
                     {
                         UserId = user.Id,
                     },
@@ -107,9 +127,9 @@ namespace ThamitPardakht.Services.Users.Commands.RegisterUser
             catch (Exception)
             {
 
-                return new ResultDto<ResultRgegisterUserDto>()
+                return new ResultDto<ResultRegisterUserDto>()
                 {
-                    Data = new ResultRgegisterUserDto()
+                    Data = new ResultRegisterUserDto()
                     {
                         UserId = 0,
 

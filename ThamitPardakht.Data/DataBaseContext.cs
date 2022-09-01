@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ThamitPardakht.Common.Utilities;
 using ThamitPardakht.Data.Interface;
+using ThamitPardakht.Entities.Entities.Contacts;
 using ThamitPardakht.Entities.Entities.Users;
 
 namespace ThamitPardakht.Data
@@ -20,6 +21,8 @@ namespace ThamitPardakht.Data
         public DbSet<User> Users{ get; set; }
         public DbSet<Role> Roles{ get; set; }
         public DbSet<UserInRole> UserInRoles { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
+        public DbSet<UserContact> UserContacts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

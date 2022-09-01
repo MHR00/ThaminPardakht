@@ -4,9 +4,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ThamitPardakht.EndPoint</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/ThamitPardakht.EndPoint.styles.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900%7CMontserrat:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="~/AdminTemplate/app-assets/fonts/feather/style.min.css">
+    <link rel="stylesheet" type="text/css" href="~/AdminTemplate/app-assets/fonts/simple-line-icons/style.css">
+    <link rel="stylesheet" type="text/css" href="~/AdminTemplate/app-assets/fonts/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/AdminTemplate/app-assets/vendors/css/perfect-scrollbar.min.css">
+    <link rel="stylesheet" type="text/css" href="~/AdminTemplate/app-assets/vendors/css/prism.min.css">
+    <link rel="stylesheet" type="text/css" href="~/AdminTemplate/app-assets/css/app.css">
 </head>
 <body>
    @* <header>
@@ -41,10 +45,28 @@
             &copy; 1401 - ThamitPardakht.EndPoint - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+   @* <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>*@
+
+     <script src="~/AdminTemplate/app-assets/vendors/js/core/jquery-3.3.1.min.js"></script>
+    <script src="~/AdminTemplate/app-assets/js/persian-datepicker.min.js"></script>
+    <script src="~/AdminTemplate/app-assets/vendors/js/core/popper.min.js"></script>
+    <script src="~/AdminTemplate/app-assets/vendors/js/core/bootstrap.min.js"></script>
+    <script src="~/AdminTemplate/app-assets/vendors/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="~/AdminTemplate/app-assets/vendors/js/prism.min.js"></script>
+    <script src="~/AdminTemplate/app-assets/vendors/js/jquery.matchHeight-min.js"></script>
+    <script src="~/AdminTemplate/app-assets/vendors/js/screenfull.min.js"></script>
+    <script src="~/AdminTemplate/app-assets/vendors/js/pace/pace.min.js"></script>
+    <!-- BEGIN VENDOR JS-->
+    <!-- BEGIN PAGE VENDOR JS-->
+    <!-- END PAGE VENDOR JS-->
+    <!-- BEGIN CONVEX JS-->
+    <script src="~/AdminTemplate/app-assets/js/app-sidebar.js"></script>
+    <script src="~/AdminTemplate/app-assets/js/notification-sidebar.js"></script>
+    <script src="~/AdminTemplate/app-assets/js/customizer.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Modals",false)
 </body>
 </html>
 

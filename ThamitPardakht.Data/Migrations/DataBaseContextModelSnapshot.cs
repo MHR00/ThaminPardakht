@@ -22,6 +22,66 @@ namespace ThamitPardakht.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("ThamitPardakht.Entities.Entities.Contacts.Contact", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("InsertTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MobileNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RemoveTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Contacts");
+                });
+
+            modelBuilder.Entity("ThamitPardakht.Entities.Entities.Contacts.UserContact", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<long>("ContactId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserContacts");
+                });
+
             modelBuilder.Entity("ThamitPardakht.Entities.Entities.Users.Role", b =>
                 {
                     b.Property<long>("Id")
@@ -122,6 +182,25 @@ namespace ThamitPardakht.Data.Migrations
                     b.ToTable("UserInRoles");
                 });
 
+            modelBuilder.Entity("ThamitPardakht.Entities.Entities.Contacts.UserContact", b =>
+                {
+                    b.HasOne("ThamitPardakht.Entities.Entities.Contacts.Contact", "Contact")
+                        .WithMany("UserContacts")
+                        .HasForeignKey("ContactId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ThamitPardakht.Entities.Entities.Users.User", "User")
+                        .WithMany("UserContacts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Contact");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ThamitPardakht.Entities.Entities.Users.UserInRole", b =>
                 {
                     b.HasOne("ThamitPardakht.Entities.Entities.Users.Role", "Role")
@@ -131,7 +210,7 @@ namespace ThamitPardakht.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("ThamitPardakht.Entities.Entities.Users.User", "User")
-                        .WithMany("UserInRole")
+                        .WithMany("UserInRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -141,6 +220,11 @@ namespace ThamitPardakht.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ThamitPardakht.Entities.Entities.Contacts.Contact", b =>
+                {
+                    b.Navigation("UserContacts");
+                });
+
             modelBuilder.Entity("ThamitPardakht.Entities.Entities.Users.Role", b =>
                 {
                     b.Navigation("UserInRole");
@@ -148,7 +232,9 @@ namespace ThamitPardakht.Data.Migrations
 
             modelBuilder.Entity("ThamitPardakht.Entities.Entities.Users.User", b =>
                 {
-                    b.Navigation("UserInRole");
+                    b.Navigation("UserContacts");
+
+                    b.Navigation("UserInRoles");
                 });
 #pragma warning restore 612, 618
         }

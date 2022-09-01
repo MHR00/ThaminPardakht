@@ -5,15 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ThamitPardakht.Entities.Entities.Contacts;
 using ThamitPardakht.Entities.Entities.Users;
 
 namespace ThamitPardakht.Data.Interface
 {
-    public  interface IDataBaseContext
+    public interface IDataBaseContext
     {
-        public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<UserInRole> UserInRoles { get; set; }
+        DbSet<User> Users { get; set; }
+        DbSet<Role> Roles { get; set; }
+        DbSet<UserInRole> UserInRoles { get; set; }
+        DbSet<Contact> Contacts { get; set; }
+        DbSet<UserContact> UserContacts { get; set; }
 
         int SaveChange(bool acceptAllChangesOnSuccess);
         int SaveChanges();

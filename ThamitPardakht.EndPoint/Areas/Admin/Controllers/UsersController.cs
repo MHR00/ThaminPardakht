@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ThamitPardakht.Services.Users.Commands.EditUser;
 using ThamitPardakht.Services.Users.Commands.RegisterUser;
+using ThamitPardakht.Services.Users.Commands.RemoveUser;
 using ThamitPardakht.Services.Users.Queries.GetRoles;
 using ThamitPardakht.Services.Users.Queries.GetUsers;
 
@@ -12,14 +14,20 @@ namespace ThamitPardakht.EndPoint.Areas.Admin.Controllers
         private readonly IGetUserServices _getUserServices;
         private readonly IGetRolesService _getRolesService;
         private readonly IRegisterUserService _registerUserService;
+        private readonly IRemoveUserService _removeUserService;
+        private readonly IEditUserService _editUserService;
 
         public UsersController(IGetUserServices getUserServices,
             IGetRolesService getRolesService,
-            IRegisterUserService registerUserService)
+            IRegisterUserService registerUserService,
+            IRemoveUserService removeUserService,
+            IEditUserService editUserService)
         {
             _getUserServices = getUserServices;
             _getRolesService = getRolesService;
             _registerUserService = registerUserService;
+            _removeUserService = removeUserService;
+            _editUserService = editUserService;
         }
 
 
@@ -43,13 +51,13 @@ namespace ThamitPardakht.EndPoint.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Create(string Email , string FullName , long RoleId , string Password , string RePassword)
         {
-            var result = _registerUserService.Execute(new RequestRgegisterUserDto
+            var result = _registerUserService.Execute(new RequestRegisterUserDto
             {
                 Email = Email,
                 FullName = FullName,
-                roles = new List<RolesInRgegisterUserDto>()
+                roles = new List<RolesInRegisterUserDto>()
                 {
-                    new RolesInRgegisterUserDto
+                    new RolesInRegisterUserDto
                     {
                         Id = RoleId
                     }
@@ -59,5 +67,23 @@ namespace ThamitPardakht.EndPoint.Areas.Admin.Controllers
             });
             return Json(result);
         }
+
+        [HttpPost]
+        public IActionResult Delete(long UserId)
+        {
+            return Json(_removeUserService.Execute(UserId));
+        }
+
+        [HttpPost]
+        public IActionResult Edit(long UserId , string FullName)
+        {
+            return Json(_editUserService.Execute(new RequestEdituserDto
+            {
+                Fullname = FullName,
+                UserId = UserId,
+            }));
+        }
+
+
     }
 }

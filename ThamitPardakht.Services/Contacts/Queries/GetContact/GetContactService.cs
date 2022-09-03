@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,9 +18,9 @@ namespace ThamitPardakht.Services.Contacts.Queries.GetContact
             _context = context;
         }
 
-        public ResultGetContactDto Execute(ReqhestGetContactDto contact)
+        public ResultGetContactDto Execute(RequestGetContactDto contact , long userId)
         {
-            var contacts = _context.Contacts.AsQueryable();
+            var contacts = _context.Contacts.Include(p=>p.UserContacts.Where(u=>u.UserId==userId)).AsQueryable();
             if (!string.IsNullOrWhiteSpace(contact.SearchKey))
             {
                 contacts = contacts.Where(p => p.FirstName.Contains(contact.SearchKey) && p.LastName.Contains(contact.SearchKey)

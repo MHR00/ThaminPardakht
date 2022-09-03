@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ThamitPardakht.Data;
 
@@ -11,9 +12,10 @@ using ThamitPardakht.Data;
 namespace ThamitPardakht.Data.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220903041433_AccountModel")]
+    partial class AccountModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,18 +38,6 @@ namespace ThamitPardakht.Data.Migrations
                     b.Property<decimal>("BalanceT")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime>("InsertTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("RemoveTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("UpdateTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
@@ -56,52 +46,7 @@ namespace ThamitPardakht.Data.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Accounts");
-                });
-
-            modelBuilder.Entity("ThamitPardakht.Entities.Entities.Accounts.Transaction", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<long>("AccountId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("InsertTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("Money")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("MoneyType")
-                        .HasColumnType("int");
-
-                    b.Property<long>("ReciverId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("RemoveTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("SenderId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("TransferType")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdateTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
-
-                    b.ToTable("Transactions");
+                    b.ToTable("Account");
                 });
 
             modelBuilder.Entity("ThamitPardakht.Entities.Entities.Contacts.Contact", b =>
@@ -206,9 +151,6 @@ namespace ThamitPardakht.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<long>("AccountId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -278,17 +220,6 @@ namespace ThamitPardakht.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ThamitPardakht.Entities.Entities.Accounts.Transaction", b =>
-                {
-                    b.HasOne("ThamitPardakht.Entities.Entities.Accounts.Account", "Account")
-                        .WithMany("Transactions")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-                });
-
             modelBuilder.Entity("ThamitPardakht.Entities.Entities.Contacts.UserContact", b =>
                 {
                     b.HasOne("ThamitPardakht.Entities.Entities.Contacts.Contact", "Contact")
@@ -325,11 +256,6 @@ namespace ThamitPardakht.Data.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ThamitPardakht.Entities.Entities.Accounts.Account", b =>
-                {
-                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("ThamitPardakht.Entities.Entities.Contacts.Contact", b =>

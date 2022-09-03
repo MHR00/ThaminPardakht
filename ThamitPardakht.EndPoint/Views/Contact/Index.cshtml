@@ -7,20 +7,24 @@
 }
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width , initial-scale=1.0" />
-        <title>افزودن مخاطب</title>
-        <!--main-style--------------------------------------->
-        <link rel="stylesheet" href="~/CustomStyle/Contactform/css/Style.css" />
-    </head>
-    <body>
-    @foreach(var item in Model.Contacts)
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width , initial-scale=1.0" />
+    <title>افزودن مخاطب</title>
+    <!--main-style--------------------------------------->
+    <link rel="stylesheet" href="~/CustomStyle/Contactform/css/Style.css" />
+</head>
+<body>
+    @foreach (var item in Model.Contacts)
     {
-        
+        <ul>
+            <li>@item.FirstName</li>
+            <li>@item.LastName</li>
+            <li>@item.MobileNumber</li>
+        </ul>
     }
 </body>
-    <script src="~/CustomStyle/Contactform/js/JavaScript.js"></script>
+<script src="~/CustomStyle/Contactform/js/JavaScript.js"></script>
 </html>
 
 

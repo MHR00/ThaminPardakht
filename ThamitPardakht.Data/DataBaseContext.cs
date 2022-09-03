@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ThamitPardakht.Common.Utilities;
 using ThamitPardakht.Data.Interface;
+using ThamitPardakht.Entities.Entities.Accounts;
 using ThamitPardakht.Entities.Entities.Contacts;
 using ThamitPardakht.Entities.Entities.Users;
 
@@ -24,6 +25,10 @@ namespace ThamitPardakht.Data
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<UserContact> UserContacts { get; set; }
 
+        public DbSet<Account> Accounts { get; set; }
+
+        public DbSet<Transaction> Transactions { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // افزودن مقادیر پیش فرض به جدول Roles
@@ -37,6 +42,16 @@ namespace ThamitPardakht.Data
 
             //--
             modelBuilder.Entity<User>().HasQueryFilter(p => !p.IsRemoved);
+
+            modelBuilder.Entity<User>()
+            .HasOne(a => a.Account)
+            .WithOne(a => a.User)
+            .HasForeignKey<Account>(c => c.UserId);
+
+            
+
+
+
         }
 
         public int SaveChange(bool acceptAllChangesOnSuccess)

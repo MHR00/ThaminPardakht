@@ -1,23 +1,35 @@
-﻿
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using ThamitPardakht.Services.Contacts.Command.AddContact;
+using ThamitPardakht.Services.Contacts.Queries.GetContact;
 
 namespace ThamitPardakht.EndPoint.Controllers
 {
     public class ContactController : Controller
     {
         private readonly IAddContactService _addContactService;
-        
+        private readonly IGetContactService _getContactService;
 
-        public ContactController(IAddContactService addContactService)
+        public ContactController(IAddContactService addContactService,
+            IGetContactService getContactService)
         {
             _addContactService = addContactService;
+            _getContactService = getContactService;
         }
-        public IActionResult Index()
+        public IActionResult Index(string seachKey, int page = 1)
         {
-            return View();
+            var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            long UserId = (long)Convert.ToDouble(user);
+            if(user == null)
+            {
+                return NotFound();
+            }
+            return View(_getContactService.Execute(new RequestGetContactDto
+            {
+                SearchKey = seachKey,
+                Page = page
+            }, UserId));
         }
 
         [HttpGet]

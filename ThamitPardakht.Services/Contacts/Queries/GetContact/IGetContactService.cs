@@ -2,6 +2,6 @@
 {
     public interface IGetContactService
     {
-        ResultGetContactDto Execute(ReqhestGetContactDto contact);
+        ResultGetContactDto Execute(RequestGetContactDto contact, long userId);
     }
 }
